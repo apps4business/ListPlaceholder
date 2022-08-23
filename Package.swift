@@ -1,14 +1,16 @@
-// swift-tools-version:4.2
+// swift-tools-version:5.3
 import PackageDescription
 
 let package = Package(
     name: "ListPlaceholder",
+    platforms: [
+        .iOS(.v10)
+    ],
     products: [
         .library(name: "ListPlaceholder", targets: ["ListPlaceholder"]),
     ],
-    dependencies: [
-    ],
+    dependencies: [],
     targets: [
-        .target(name: "ListPlaceholder", dependencies: [], path: "ListPlaceholder/Classes")
+        .target(name: "ListPlaceholder", dependencies: [], path: "ListPlaceholder/Classes"),
     ]
 )
