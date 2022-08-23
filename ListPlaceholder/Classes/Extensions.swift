@@ -139,10 +139,10 @@ private extension UIColor {
         }
 
         self.isUserInteractionEnabled = false
-        if let table = self as? UITableView {
-            ListLoader.shared.addLoaderTo(table, coverColor: coverColor)
-        } else if let collection = self as? UICollectionView {
-            ListLoader.shared.addLoaderTo(collection, coverColor: coverColor)
+        if self is UITableView {
+            ListLoader.shared.addLoaderTo(self as! UITableView, coverColor: coverColor)
+        } else if self is UICollectionView {
+            ListLoader.shared.addLoaderTo(self as! UICollectionView, coverColor: coverColor)
         } else {
             ListLoader.shared.addLoaderToViews([self], coverColor: coverColor)
         }
@@ -150,10 +150,10 @@ private extension UIColor {
 
     public func hideLoader() {
         self.isUserInteractionEnabled = true
-        if let table = self as? UITableView {
-            ListLoader.shared.removeLoaderFrom(table)
-        } else if let collection = self as? UICollectionView {
-            ListLoader.shared.removeLoaderFrom(collection)
+        if self is UITableView {
+            ListLoader.shared.removeLoaderFrom(self as! UITableView)
+        } else if self is UICollectionView {
+            ListLoader.shared.removeLoaderFrom(self as! UICollectionView)
         } else {
             ListLoader.shared.removeLoaderFromViews([self])
         }
