@@ -191,6 +191,13 @@ extension UIColor {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
                 return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1)
+            case .unspecified:
+                switch UITraitCollection.current.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1)
+                default:
+                    return lightColor
+                }
             default:
                 return lightColor
             }
@@ -205,6 +212,13 @@ extension UIColor {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
                 return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+            case .unspecified:
+                switch UITraitCollection.current.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+                default:
+                    return lightColor
+                }
             default:
                 return lightColor
             }
@@ -219,6 +233,13 @@ extension UIColor {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
                 return UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
+            case .unspecified:
+                switch UITraitCollection.current.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
+                default:
+                    return lightColor
+                }
             default:
                 return lightColor
             }
