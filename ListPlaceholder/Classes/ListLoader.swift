@@ -34,6 +34,9 @@ import UIKit
     }
 
     func removeLoaderFromViews(_ views: [UIView]) {
+        for view in views {
+            self.views.removeAll(where: { $0.views.allObjects.contains(view) })
+        }
         CATransaction.begin()
         views.forEach { $0.ld_removeLoader() }
         CATransaction.commit()
