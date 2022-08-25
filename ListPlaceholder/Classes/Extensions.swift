@@ -14,7 +14,7 @@ var loaderDuration = 0.85
 var gradientWidth: Double = 0.17
 var gradientFirstStop: Double = 0.1
 
-@objc extension UIView {
+extension UIView {
     func ld_getCutoutView() -> UIView? {
         return objc_getAssociatedObject(self, &cutoutHandle) as! UIView?
     }
@@ -117,13 +117,13 @@ private extension UIColor {
     }
 }
 
-@objc extension UITableView: ListLoadable {
+extension UITableView: ListLoadable {
     public func ld_visibleContentViews() -> [UIView] {
         return ((self.visibleCells as NSArray).value(forKey: "contentView") as? [UIView]) ?? []
     }
 }
 
-@objc extension UIView {
+extension UIView {
     public func showLoader() {
         let coverColor: UIColor
 
@@ -178,19 +178,19 @@ private extension UIColor {
     }
 }
 
-@objc extension UICollectionView: ListLoadable {
+extension UICollectionView: ListLoadable {
     public func ld_visibleContentViews() -> [UIView] {
         return ((self.visibleCells as NSArray).value(forKey: "contentView") as? [UIView]) ?? []
     }
 }
 
-@objc extension UIColor {
+extension UIColor {
     static var backgroundFadedGrey: UIColor {
         let lightColor = UIColor(red: 246.0/255.0, green: 247.0/255.0, blue: 248.0/255.0, alpha: 1)
         if #available(iOS 13.0, *) {
-            switch UITraitCollection.current.userInterfaceStyle {
+            switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 9/255.0, green: 8/255.0, blue: 7/255.0, alpha: 1)
+                return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1)
             default:
                 return lightColor
             }
@@ -202,9 +202,9 @@ private extension UIColor {
     static var gradientFirstStop: UIColor {
         let lightColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
         if #available(iOS 13.0, *) {
-            switch UITraitCollection.current.userInterfaceStyle {
+            switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1.0)
+                return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
             default:
                 return lightColor
             }
@@ -216,9 +216,9 @@ private extension UIColor {
     static var gradientSecondStop: UIColor {
         let lightColor = UIColor(red: 221.0/255.0, green: 221.0/255.0, blue: 221.0/255.0, alpha: 1.0)
         if #available(iOS 13.0, *) {
-            switch UITraitCollection.current.userInterfaceStyle {
+            switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+                return UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
             default:
                 return lightColor
             }
@@ -228,7 +228,7 @@ private extension UIColor {
     }
 }
 
-@objc extension UIView {
+extension UIView {
     func boundInside(_ superView: UIView) {
         self.translatesAutoresizingMaskIntoConstraints = false
         superView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[subview]-0-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["subview": self]))
@@ -245,5 +245,14 @@ extension CGFloat {
 extension Notification.Name {
     static var traitCollectionStyleChanged: Notification.Name {
         return Notification.Name("trait_collection_style_changed")
+    }
+}
+
+extension UIApplication {
+    var currentWindow: UIWindow? {
+        if #available(iOS 13.0, *) {
+            return connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap { $0.windows }.first { $0.isKeyWindow }
+        }
+        return UIApplication.shared.keyWindow
     }
 }

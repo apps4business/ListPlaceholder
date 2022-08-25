@@ -19,7 +19,7 @@ import UIKit
         for view in self.superview?.subviews ?? [] {
             guard view != self else { continue }
             if #available(iOS 9.0, *), let stackView = view as? UIStackView {
-                recursivelyDrawCutOutInStackView(stackView, fromParentView: view.superview!, context: context)
+                recursivelyDrawCutOutInStackView(stackView, fromParentView: view.superview, context: context)
             } else {
                 self.drawPath(context: context, view: view)
             }
@@ -27,7 +27,7 @@ import UIKit
     }
 
     @available(iOS 9.0, *)
-    private func recursivelyDrawCutOutInStackView(_ stackView: UIStackView, fromParentView parentView: UIView, context: CGContext?) {
+    private func recursivelyDrawCutOutInStackView(_ stackView: UIStackView, fromParentView parentView: UIView?, context: CGContext?) {
         stackView.arrangedSubviews.forEach { arrangedSubview in
             if let arrangedSubviewStackView = arrangedSubview as? UIStackView {
                 recursivelyDrawCutOutInStackView(arrangedSubviewStackView, fromParentView: parentView, context: context)
@@ -42,7 +42,8 @@ import UIKit
         let frame = fixedFrame ?? view.frame
         context?.setBlendMode(.clear)
         let rect = frame
-        let clipPath: CGPath = UIBezierPath(roundedRect: rect, cornerRadius: view.layer.cornerRadius).cgPath
+        let cornerRadius = max(min(min(rect.height, rect.width), 4), view.layer.cornerRadius)
+        let clipPath: CGPath = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).cgPath
         context?.addPath(clipPath)
         context?.setFillColor(UIColor.clear.cgColor)
         context?.closePath()
