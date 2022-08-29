@@ -1,5 +1,5 @@
 PODS:
-  - ListPlaceholder (1.5)
+  - ListPlaceholder (1.10)
 
 DEPENDENCIES:
   - ListPlaceholder (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ListPlaceholder: 2d7950014852ee5613d636cf14fd1bb93419e330
+  ListPlaceholder: ea97f158b6cdb52358d5c8f6102ef1134d64ec6d
 
 PODFILE CHECKSUM: 2675b201941f3261d1d3d62dbe3a17e5d1a3a54f
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.3

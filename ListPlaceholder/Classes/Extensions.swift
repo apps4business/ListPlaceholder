@@ -185,16 +185,34 @@ extension UICollectionView: ListLoadable {
 }
 
 extension UIColor {
+    convenience init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt64()
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int & 0xFF, int >> 24 & 0xFF, int >> 16 & 0xFF, int >> 8 & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(displayP3Red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+
     static var backgroundFadedGrey: UIColor {
-        let lightColor = UIColor(red: 246.0/255.0, green: 247.0/255.0, blue: 248.0/255.0, alpha: 1)
+        let lightColor = UIColor(hex: "#F8F8F9")
         if #available(iOS 13.0, *) {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1)
+                return UIColor(hex: "#232337")
             case .unspecified:
                 switch UITraitCollection.current.userInterfaceStyle {
                 case .dark:
-                    return UIColor(red: 17/255.0, green: 17/255.0, blue: 17/255.0, alpha: 1)
+                    return UIColor(hex: "#232337")
                 default:
                     return lightColor
                 }
@@ -207,15 +225,15 @@ extension UIColor {
     }
 
     static var gradientFirstStop: UIColor {
-        let lightColor = UIColor(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+        let lightColor = UIColor(hex: "#F8F8F9")
         if #available(iOS 13.0, *) {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+                return UIColor(hex: "#232337")
             case .unspecified:
                 switch UITraitCollection.current.userInterfaceStyle {
                 case .dark:
-                    return UIColor(red: 34/255.0, green: 34/255.0, blue: 34/255.0, alpha: 1.0)
+                    return UIColor(hex: "#232337")
                 default:
                     return lightColor
                 }
@@ -228,15 +246,15 @@ extension UIColor {
     }
 
     static var gradientSecondStop: UIColor {
-        let lightColor = UIColor(red: 221.0/255.0, green: 221.0/255.0, blue: 221.0/255.0, alpha: 1.0)
+        let lightColor = UIColor(hex: "#EDEDF0")
         if #available(iOS 13.0, *) {
             switch UIApplication.shared.currentWindow?.overrideUserInterfaceStyle {
             case .dark:
-                return UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
+                return UIColor(hex: "#34344E")
             case .unspecified:
                 switch UITraitCollection.current.userInterfaceStyle {
                 case .dark:
-                    return UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1.0)
+                    return UIColor(hex: "#34344E")
                 default:
                     return lightColor
                 }
