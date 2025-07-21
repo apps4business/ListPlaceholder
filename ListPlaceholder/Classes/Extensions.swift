@@ -124,7 +124,7 @@ extension UITableView: ListLoadable {
 }
 
 extension UIView {
-    public func showLoader() {
+    @objc public func showLoader() {
         let coverColor: UIColor
 
         if let backgroundColor = backgroundColor, backgroundColor != .clear {
@@ -148,7 +148,7 @@ extension UIView {
         }
     }
 
-    public func hideLoader() {
+    @objc public func hideLoader() {
         self.isUserInteractionEnabled = true
         if self is UITableView {
             ListLoader.shared.removeLoaderFrom(self as! UITableView)
